@@ -23,11 +23,6 @@ const config: CapacitorConfig = {
       showAutomatically: true,
       androidSplashScreenInset: '10px',
     },
-    Keyboard: {
-      resize: 'body',
-      style: 'native',
-      resizeOnOrientationChange: true,
-    },
   },
   android: {
     // Optimize for webview performance

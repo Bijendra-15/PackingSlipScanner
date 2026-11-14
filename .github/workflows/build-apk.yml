@@ -15,58 +15,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install dependencies (App)
-        run: |
-          cd App
-          npm install
-
-      - name: Build web app
-        run: |
-          cd App
-          npm run build
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Android SDK
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
           api-level: 34
           build-tools: 34.0.0
 
-      - name: Sync Capacitor Android
-        run: |
-          cd App
-          npx cap sync android
-
       - name: Grant execute permission for gradlew
         run: |
-          cd App/android
-          chmod +x gradlew
+          chmod +x AndroidApp/gradlew
+          chmod +x AndroidApp/app/gradlew
 
       - name: Build APK
         run: |
-          cd App/android
+          cd AndroidApp
           ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: App/android/app/build/outputs/apk/debug/app-debug.apk
+          name: packing-slip-scanner-apk
+          path: AndroidApp/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: App/android/app/build/outputs/apk/debug/app-debug.apk
+          files: AndroidApp/app/build/outputs/apk/debug/app-debug.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
