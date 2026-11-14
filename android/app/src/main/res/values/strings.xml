@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Packing Slip Scanner</string>
+    <string name="error_connection_failed">Connection Failed</string>
+    <string name="retry">Retry</string>
+</resources>

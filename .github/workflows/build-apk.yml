@@ -15,6 +15,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies (React)
+        run: npm install
+        working-directory: frontend
+
+      - name: Build React app
+        run: npm run build
+        working-directory: frontend
+
+      - name: Copy built files to Android assets
+        run: |
+          rm -rf android/app/src/main/assets/*
+          cp -r frontend/dist/* android/app/src/main/assets/
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -28,25 +46,22 @@ jobs:
           build-tools: 34.0.0
 
       - name: Grant execute permission for gradlew
-        run: |
-          chmod +x AndroidApp/gradlew
-          chmod +x AndroidApp/app/gradlew
+        run: chmod +x android/gradlew
 
       - name: Build APK
-        run: |
-          cd AndroidApp
-          ./gradlew assembleDebug
+        run: ./gradlew assembleDebug
+        working-directory: android
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: packing-slip-scanner-apk
-          path: AndroidApp/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: AndroidApp/app/build/outputs/apk/debug/app-debug.apk
+          files: android/app/build/outputs/apk/debug/app-debug.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
