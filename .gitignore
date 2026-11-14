@@ -1,19 +1,12 @@
-# Root .gitignore
-
-# Node modules
+# Dependencies
 node_modules/
 
 # Build output
 dist/
-build/
-*.apk
-*.ipa
 
-# Capacitor generated files
-App/public/
-!App/public/favicon.ico
-!App/public/manifest.json
-!App/public/icons/
+# Capacitor directories
+android/
+ios/
 
 # IDE
 .vscode/
@@ -40,8 +33,15 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 
-# Backend build
+# Build artifacts
+*.apk
+*.ipa
+
+# Backend build output
 backend/bin/
 backend/obj/
 backend/*.user
 backend/*.suo
+
+# Exclude old App folder
+App/
