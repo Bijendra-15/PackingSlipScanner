@@ -42,6 +42,3 @@ backend/bin/
 backend/obj/
 backend/*.user
 backend/*.suo
-
-# Exclude old App folder
-App/
