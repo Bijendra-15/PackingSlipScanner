@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var.webView: WebView
+    private lateinit var WebView: WebView
     private lateinit var progressBar: ProgressBar
     private lateinit var errorLayout: ConstraintLayout
     private lateinit var errorMessage: TextView
