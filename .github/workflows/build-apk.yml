@@ -21,7 +21,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies (React)
-        run: npm install
+        run: npm ci
         working-directory: App/frontend
 
       - name: Build React app
@@ -30,6 +30,7 @@ jobs:
 
       - name: Copy built files to Android assets
         run: |
+          mkdir -p App/android/app/src/main/assets
           rm -rf App/android/app/src/main/assets/*
           cp -r App/frontend/dist/* App/android/app/src/main/assets/
 
