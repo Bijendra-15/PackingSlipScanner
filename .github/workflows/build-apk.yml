@@ -42,14 +42,17 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          api-level: 34
-          build-tools: 34.0.0
+          packages: 'platforms;android-34 build-tools;34.0.0'
+          accept-android-sdk-licenses: 'true'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x App/android/gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.5'
+          validate-wrappers: 'false'
 
       - name: Build APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
         working-directory: App/android
 
       - name: Upload APK
