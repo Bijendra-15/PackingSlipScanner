@@ -10,11 +10,11 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
-import android.widget.ConstraintLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             javaScriptEnabled = true
             domStorageEnabled = true
             databaseEnabled = true
-            cacheEnabled = true
+            setCacheEnabled(true)
             allowFileAccess = true
             allowContentAccess = true
             allowUniversalAccessFromFileURLs = true
@@ -62,8 +62,8 @@ class MainActivity : AppCompatActivity() {
             useWideViewPort = true
             loadWithOverviewMode = true
             javaScriptCanOpenWindowsAutomatically = true
-            supportMultipleWindows = true
-            layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_TYPE
+            setSupportMultipleWindows(true)
+            layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
             setGeolocationEnabled(true)
             setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW)
         }
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         webview?.let {
             it.stopLoading()
-            it.clearCache()
+            it.clearCache(true)
             it.clearHistory()
             it.destroy()
         }
